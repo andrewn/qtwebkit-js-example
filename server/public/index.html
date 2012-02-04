@@ -1,0 +1,64 @@
+<html>
+    <head>
+        <title>QtBridge demo</title>
+        <style type="text/css">
+            body {
+                font-family: sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Test QtBridge</h1>
+        <video src="univac.webm" autoplay controls></video>
+        <div id="output">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>typeof</th>
+                        <th>function</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div>
+        <script>
+            var exposeProperties = function (el, obj) {
+                el.innerHTML = serialiseProperties(obj).join("");
+            };
+
+            var serialiseProperties = function (obj) {
+                var output = [];
+                //output.push("Has window." + obj +  " object? " + (!!window[obj]));
+                //output.push("<hr />");
+
+                if (!!window[obj]) {
+                    for ( var key in window[obj] ) {
+                        try {
+                            output = output.concat( getPropertyInfo( key, window[obj][key] ) );
+                            //output.push('<hr />');
+                        } catch (e) {
+                            output.push("<tr><td>Error getting info for " + key + "</td></tr>");
+                        }
+                    }
+                }
+                return output;
+            };
+
+            var getPropertyInfo = function (name, prop) {
+                return [
+                      "<tr>"
+                    , "<td>" + name + "</td>" // name
+                    , "<td>" + (typeof prop) + "</td>"    // typeof
+                    , "<td>" + (typeof prop == "function" ? prop() : '') + "</td>" // func
+                    , "</tr>"
+                ];
+            };
+
+            var el = document.querySelector("#output tbody");
+            exposeProperties(el, 'qt');
+        </script>
+    </body>
+</html>

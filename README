@@ -1,0 +1,15 @@
+This is a basic demo showing:
+ - a Qt app running full-screen
+ - exposing a javascript object from Qt
+
+## app
+
+The Qt app. You can compile it using Qt Creator.
+
+The fullscreen call is in main.cpp
+The javascript object is defined in main.qml
+
+## server
+
+A simple HTML page that outputs the contents of 
+the window.qt object
